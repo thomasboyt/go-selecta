@@ -1,8 +1,8 @@
 package selecta
 
 import (
-	"testing"
 	. "github.com/smartystreets/goconvey/convey"
+	"testing"
 )
 
 func TestScoring(t *testing.T) {
@@ -33,8 +33,8 @@ func TestScoring(t *testing.T) {
 		Convey("scores 1, normalized to length, when the query equals the choice", func() {
 			So(Score("a", "a"), ShouldEqual, 1.0)
 			So(Score("ab", "ab"), ShouldEqual, 0.5)
-			So(Score("a long string", "a long string"), ShouldEqual, 1.0 / float64(len("a long string")))
-			So(Score("spec/search_spec.rb", "sear"), ShouldEqual, 1.0 / float64(len("spec/search_spec.rb")))
+			So(Score("a long string", "a long string"), ShouldEqual, 1.0/float64(len("a long string")))
+			So(Score("spec/search_spec.rb", "sear"), ShouldEqual, 1.0/float64(len("spec/search_spec.rb")))
 		})
 
 	})
@@ -69,8 +69,8 @@ func TestScoring(t *testing.T) {
 		Convey("scores the tighter of two matches, regardless of order", func() {
 			tight := "12"
 			loose := "1padding2"
-			So(Score(tight + loose, "12"), ShouldEqual, 1.0 / float64(len(tight + loose)))
-			So(Score(loose + tight, "12"), ShouldEqual, 1.0 / float64(len(loose + tight)))
+			So(Score(tight+loose, "12"), ShouldEqual, 1.0/float64(len(tight+loose)))
+			So(Score(loose+tight, "12"), ShouldEqual, 1.0/float64(len(loose+tight)))
 		})
 	})
 
