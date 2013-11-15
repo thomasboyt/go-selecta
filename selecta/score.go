@@ -4,6 +4,7 @@ import (
 	"strings"
 )
 
+// Returns a score between 0.0 and 1.0 for a choice and a query.
 func Score(choice, query string) float64 {
 	if choice == "" {
 		return 0.0
@@ -29,6 +30,8 @@ func Score(choice, query string) float64 {
 	return score / float64(len(choice))
 }
 
+// Computes the length of the shortest substring between the first char and
+// the rest of the characters. Returns -1 if the query isn't within the string
 func computeMatchLength(str, charsStr string) int {
 	maxLength := -1
 
@@ -49,6 +52,7 @@ func computeMatchLength(str, charsStr string) int {
 	return maxLength
 }
 
+// Find all occurances of a char in a string
 func findIndexesInString(str string, char rune) []int {
 	indexes := make([]int, 0)
 
@@ -61,7 +65,7 @@ func findIndexesInString(str string, char rune) []int {
 	return indexes
 }
 
-// Find each of the characters in the string, moving ltr
+// Find each of the characters in the string, moving ltr.
 func findEndOfMatch(str string, restChars []rune, firstIndex int) int {
 	lastIndex := firstIndex
 	for _, charRuneValue := range restChars {

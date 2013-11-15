@@ -1,12 +1,11 @@
 package selecta
 
 import (
-	"testing"
 	"bufio"
-	"os"
 	"io"
+	"os"
+	"testing"
 )
-// puts "words, matching: %s" % benchmark(WORDS, "ungovernableness")
 
 func getChoices() []string {
 	f, _ := os.Open("words.txt")
@@ -19,7 +18,7 @@ func getChoices() []string {
 		if err == io.EOF {
 			break
 		}
-		word := string(line[1:len(line)-2])
+		word := string(line[1 : len(line)-2])
 		choices = append(choices, word)
 	}
 
