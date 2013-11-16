@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/codegangsta/cli"
 	"github.com/nsf/termbox-go"
-	"go-selecta/selecta"
+	"github.com/thomasboyt/go-selecta/selecta"
 	"io/ioutil"
 	"os"
 	"strings"
