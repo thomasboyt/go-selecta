@@ -8,6 +8,7 @@ import (
 	"os"
 	"strings"
 	"unicode"
+	"fmt"
 )
 
 func main() {
@@ -37,7 +38,7 @@ func main() {
 
 		termbox.Close()
 
-		println(search.SelectedChoice())
+		fmt.Fprint(os.Stdout, search.SelectedChoice())
 	}
 
 	app.Run(os.Args)
