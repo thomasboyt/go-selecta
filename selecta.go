@@ -1,14 +1,14 @@
 package main
 
 import (
-	"go-selecta/selecta"
+	"fmt"
 	"github.com/codegangsta/cli"
 	"github.com/nsf/termbox-go"
+	"go-selecta/selecta"
 	"io/ioutil"
 	"os"
 	"strings"
 	"unicode"
-	"fmt"
 )
 
 func main() {
@@ -49,16 +49,25 @@ loop:
 	for !s.Done {
 		switch ev := termbox.PollEvent(); ev.Type {
 		case termbox.EventKey:
-			if ev.Key == termbox.KeyCtrlC || ev.Key == termbox.KeyCtrlQ {
+			switch ev.Key {
+			case termbox.KeyCtrlC:
 				break loop
-			} else if ev.Key == termbox.KeyBackspace || ev.Key == termbox.KeyBackspace2 {
+			case termbox.KeyBackspace, termbox.KeyBackspace2:
 				s.Backspace()
-			} else if ev.Key == termbox.KeyEnter {
+			case termbox.KeyEnter:
 				s.Done = true
-			} else {
+			case termbox.KeyCtrlN:
+				s.Down()
+			case termbox.KeyCtrlP:
+				s.Up()
+			case termbox.KeyCtrlW:
+				s.DeleteWord()
+			default:
 				char := rune(ev.Ch)
 				if !unicode.IsControl(char) {
 					s.AppendQuery(string(char))
+				} else if ev.Key == termbox.KeySpace {
+					s.AppendQuery(" ")
 				}
 			}
 			termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)

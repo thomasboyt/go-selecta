@@ -21,9 +21,10 @@ go get github.com/smartystreets/goconvey/convey
 * Use stdin for choice
 * Basic UI
 * Input a word, backspace
+* Scrolling
+* Extra keybindings
 
 ### What's Not
 
-* Scrolling
-* Extra keybindings
-* Lots of other cases
+* *Probably* UTF-8/Unicode support, needs investigation
+* Options (initial search)
