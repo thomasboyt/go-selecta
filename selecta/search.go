@@ -5,10 +5,6 @@ import (
 	"sort"
 )
 
-// search is best thought of as a "view" into the list of choices
-// a new search object is generated on every input. it may be optimzable in
-// the future
-
 type Search struct {
 	choices        []string
 	Matches        Matches
