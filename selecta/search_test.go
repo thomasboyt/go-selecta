@@ -33,13 +33,13 @@ func TestSearching(t *testing.T) {
 	Convey("Matching", t, func() {
 		Convey("only returns matching choices", func() {
 			search := BlankSearch(choices, "one", 0)
-			So(len(search.matches), ShouldEqual, 1)
-			So(search.matches[0].value, ShouldEqual, "one")
+			So(len(search.Matches), ShouldEqual, 1)
+			So(search.Matches[0].Value, ShouldEqual, "one")
 		})
 		Convey("sorts the choices by score", func() {
 			search := BlankSearch([]string{"search.rb", "spec/search_spec.rb"}, "", 0)
-			So(search.matches[0].value, ShouldEqual, "search.rb")
-			So(search.matches[1].value, ShouldEqual, "spec/search_spec.rb")
+			So(search.Matches[0].Value, ShouldEqual, "search.rb")
+			So(search.Matches[1].Value, ShouldEqual, "spec/search_spec.rb")
 		})
 	})
 }

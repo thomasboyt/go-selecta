@@ -8,16 +8,16 @@ import "sort"
 
 type Search struct {
 	choices        []string
-	matches        Matches
-	index          int
-	query          string
-	done           bool
+	Matches        Matches
+	Index          int
+	Query          string
+	Done           bool
 	visibleChoices int
 }
 
 // Match type & Matches sortable slice
 type Match struct {
-	value string
+	Value string
 	score float64
 }
 
@@ -46,25 +46,40 @@ func BlankSearch(choices []string, query string, visibleChoices int) *Search {
 }
 
 func (s *Search) SelectedChoice() string {
-	return s.choices[s.index]
+	return s.choices[s.Index]
+}
+
+func (s *Search) AppendQuery(str string) {
+	s.Query += str
+	s.Index = 0
+	s.createMatches()
+}
+
+func (s *Search) Backspace() {
+	if len(s.Query) == 0 {
+		return
+	}
+	s.Query = s.Query[:len(s.Query)-1]
+	s.Index = 0
+	s.createMatches()
 }
 
 // Create the list of matches on a Search
 func (s *Search) createMatches() {
-	s.matches = make(Matches, len(s.choices))
+	s.Matches = make(Matches, len(s.choices))
 
-	// pair choice/score matches
+	// pair choice/score Matches
 	for i, choice := range s.choices {
-		s.matches[i] = &Match{choice, Score(choice, s.query)}
+		s.Matches[i] = &Match{choice, Score(choice, s.Query)}
 	}
 
-	// filter matches
-	for i := len(s.matches) - 1; i >= 0; i-- {
-		if s.matches[i].score == 0.0 {
-			s.matches = append(s.matches[:i], s.matches[i+1:]...)
+	// filter Matches
+	for i := len(s.Matches) - 1; i >= 0; i-- {
+		if s.Matches[i].score == 0.0 {
+		s.Matches = append(s.Matches[:i], s.Matches[i+1:]...)
 		}
 	}
 
-	// sort matches
-	sort.Sort(ByScore{s.matches})
+	// sort Matches
+	sort.Sort(ByScore{s.Matches})
 }

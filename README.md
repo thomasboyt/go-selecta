@@ -13,3 +13,17 @@ You'll need to run this to get convey:
 ```
 go get github.com/smartystreets/goconvey/convey
 ```
+
+### What's Done
+
+* Scoring
+* Part of searching
+* Basic UI
+* Input a word, backspace
+
+### What's Not
+
+* Actual choice input (currently uses "one, two, three")
+* Scrolling
+* Extra keybindings
+* Lots of other cases
