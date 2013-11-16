@@ -1,7 +1,7 @@
 package main
 
 import (
-	"./selecta"
+	"go-selecta/selecta"
 	"github.com/codegangsta/cli"
 	"github.com/nsf/termbox-go"
 	"io/ioutil"
