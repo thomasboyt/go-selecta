@@ -36,7 +36,6 @@ func TestScoring(t *testing.T) {
 			So(Score("a long string", "a long string"), ShouldEqual, 1.0/float64(len("a long string")))
 			So(Score("spec/search_spec.rb", "sear"), ShouldEqual, 1.0/float64(len("spec/search_spec.rb")))
 		})
-
 	})
 
 	Convey("Character matching", t, func() {

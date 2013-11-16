@@ -4,7 +4,9 @@ import (
 	"./selecta"
 	"github.com/codegangsta/cli"
 	"github.com/nsf/termbox-go"
+	"io/ioutil"
 	"os"
+	"strings"
 	"unicode"
 )
 
@@ -13,9 +15,12 @@ func main() {
 	app.Name = "selecta"
 	app.Usage = "fuzzy find whatever you want"
 	app.Action = func(c *cli.Context) {
+		// parse choices
+		bytes, _ := ioutil.ReadAll(os.Stdin)
+		choices := strings.Split(string(bytes), "\n")
 
 		// create a search
-		search := selecta.BlankSearch([]string{"one", "two", "three"}, "", 0)
+		search := selecta.BlankSearch(choices, "", 0)
 
 		// set up termbox
 		err := termbox.Init()
@@ -38,9 +43,34 @@ func main() {
 	app.Run(os.Args)
 }
 
+func EventLoop(s *selecta.Search) {
+loop:
+	for !s.Done {
+		switch ev := termbox.PollEvent(); ev.Type {
+		case termbox.EventKey:
+			if ev.Key == termbox.KeyCtrlC || ev.Key == termbox.KeyCtrlQ {
+				break loop
+			} else if ev.Key == termbox.KeyBackspace || ev.Key == termbox.KeyBackspace2 {
+				s.Backspace()
+			} else if ev.Key == termbox.KeyEnter {
+				s.Done = true
+			} else {
+				char := rune(ev.Ch)
+				if !unicode.IsControl(char) {
+					s.AppendQuery(string(char))
+				}
+			}
+			termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
+			DrawApp(s)
+		}
+	}
+}
+
+// Rendering
+
 func DrawApp(s *selecta.Search) {
-	WriteLine(0, "> " + s.Query, false)
-	termbox.SetCursor(2 + len(s.Query), 0)
+	WriteLine(0, "> "+s.Query, false)
+	termbox.SetCursor(2+len(s.Query), 0)
 
 	for i, match := range s.Matches {
 		choice := match.Value
@@ -66,29 +96,6 @@ func WriteLine(row int, str string, highlight bool) {
 			termbox.SetCell(col, row, rune(str[col]), termbox.ColorDefault, bgColor)
 		} else {
 			termbox.SetCell(col, row, ' ', termbox.ColorDefault, bgColor)
-		}
-	}
-}
-
-func EventLoop(s *selecta.Search) {
-loop:
-	for !s.Done {
-		switch ev := termbox.PollEvent(); ev.Type {
-		case termbox.EventKey:
-			if ev.Key == termbox.KeyCtrlC || ev.Key == termbox.KeyCtrlQ {
-				break loop
-			} else if ev.Key == termbox.KeyBackspace || ev.Key == termbox.KeyBackspace2 {
-				s.Backspace()
-			} else if ev.Key == termbox.KeyEnter {
-				s.Done = true
-			} else {
-				char := rune(ev.Ch)
-				if !unicode.IsControl(char) {
-					s.AppendQuery(string(char))
-				}
-			}
-			termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
-			DrawApp(s)
 		}
 	}
 }

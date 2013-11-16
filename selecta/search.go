@@ -30,7 +30,7 @@ func (s Matches) Swap(i, j int) { s[i], s[j] = s[j], s[i] }
 type ByScore struct{ Matches }
 
 func (s ByScore) Less(i, j int) bool {
-	return s.Matches[i].score < s.Matches[j].score
+	return s.Matches[i].score > s.Matches[j].score
 }
 
 func NewSearch(choices []string, index int, query string, done bool, visibleChoices int) *Search {
@@ -46,7 +46,7 @@ func BlankSearch(choices []string, query string, visibleChoices int) *Search {
 }
 
 func (s *Search) SelectedChoice() string {
-	return s.choices[s.Index]
+	return s.Matches[s.Index].Value
 }
 
 func (s *Search) AppendQuery(str string) {

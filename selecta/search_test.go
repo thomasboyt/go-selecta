@@ -37,9 +37,10 @@ func TestSearching(t *testing.T) {
 			So(search.Matches[0].Value, ShouldEqual, "one")
 		})
 		Convey("sorts the choices by score", func() {
-			search := BlankSearch([]string{"search.rb", "spec/search_spec.rb"}, "", 0)
-			So(search.Matches[0].Value, ShouldEqual, "search.rb")
-			So(search.Matches[1].Value, ShouldEqual, "spec/search_spec.rb")
+			search := BlankSearch([]string{"selecta.go", "selecta_test.go"}, "", 0)
+			search.AppendQuery("se")
+			So(search.Matches[0].Value, ShouldEqual, "selecta.go")
+			So(search.Matches[1].Value, ShouldEqual, "selecta_test.go")
 		})
 	})
 }
