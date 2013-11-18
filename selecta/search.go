@@ -11,7 +11,7 @@ type Search struct {
 	Index          int
 	Query          string
 	Done           bool
-	visibleChoices int
+	VisibleChoices int
 }
 
 // Match type & Matches sortable slice
@@ -78,7 +78,7 @@ func (s *Search) Down() {
 	nextIndex := s.Index + 1
 	if nextIndex == len(s.Matches) {
 		return
-	} else if nextIndex == s.visibleChoices {
+	} else if nextIndex == s.VisibleChoices {
 		return
 	}
 

@@ -44,13 +44,15 @@ func main() {
 		if initialSearch == "" {
 			initialSearch = c.String("s")
 		}
-		search := selecta.BlankSearch(choices, initialSearch, 0)
 
 		// set up termbox
 		err := termbox.Init()
 		if err != nil {
 			panic(err)
 		}
+
+		_, height := termbox.Size()
+		search := selecta.BlankSearch(choices, initialSearch, height - 1)
 
 		termbox.SetInputMode(termbox.InputEsc)
 
@@ -106,6 +108,9 @@ func DrawApp(s *selecta.Search) {
 	termbox.SetCursor(2+len(s.Query), 0)
 
 	for i, match := range s.Matches {
+		if i >= s.VisibleChoices {
+			break
+		}
 		choice := match.Value
 		highlight := false
 		if s.Index == i {
