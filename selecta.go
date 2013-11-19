@@ -70,13 +70,13 @@ func main() {
 }
 
 func EventLoop(s *selecta.Search) {
-loop:
 	for !s.Done {
 		switch ev := termbox.PollEvent(); ev.Type {
 		case termbox.EventKey:
 			switch ev.Key {
 			case termbox.KeyCtrlC:
-				break loop
+				termbox.Close()
+				os.Exit(0)
 			case termbox.KeyBackspace, termbox.KeyBackspace2:
 				s.Backspace()
 			case termbox.KeyEnter:
