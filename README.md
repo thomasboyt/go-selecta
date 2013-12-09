@@ -14,17 +14,6 @@ You'll need to run this to get convey:
 go get github.com/smartystreets/goconvey/convey
 ```
 
-### What's Done
-
-* Scoring
-* Part of searching
-* Use stdin for choice
-* Basic UI
-* Input a word, backspace
-* Scrolling
-* Extra keybindings
-
-### What's Not
+### Missing features of Selecta
 
 * *Probably* UTF-8/Unicode support, needs investigation
-* Options (initial search)
