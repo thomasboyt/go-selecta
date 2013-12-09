@@ -11,21 +11,6 @@ import (
 	"unicode"
 )
 
-// TODO: PR for cli.go to supprot aliases :\
-/*type searchFlag struct {
-	Value string
-	Usage string
-}
-
-func (f searchFlag) String() string {
-	return fmt.Sprintf("--search, -s\t%v", f.Usage)
-}
-
-func (f searchFlag) Apply(set *flag.FlagSet) {
-	set.String("s", f.Value, f.Usage)
-	set.String("search", f.Value, f.Usage)
-}*/
-
 func main() {
 	app := cli.NewApp()
 	app.Name = "selecta"
