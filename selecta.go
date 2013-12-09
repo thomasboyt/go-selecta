@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"github.com/codegangsta/cli"
 	"github.com/nsf/termbox-go"
@@ -13,7 +12,7 @@ import (
 )
 
 // TODO: PR for cli.go to supprot aliases :\
-type searchFlag struct {
+/*type searchFlag struct {
 	Value string
 	Usage string
 }
@@ -25,14 +24,14 @@ func (f searchFlag) String() string {
 func (f searchFlag) Apply(set *flag.FlagSet) {
 	set.String("s", f.Value, f.Usage)
 	set.String("search", f.Value, f.Usage)
-}
+}*/
 
 func main() {
 	app := cli.NewApp()
 	app.Name = "selecta"
 	app.Usage = "fuzzy find whatever you want"
 	app.Flags = []cli.Flag {
-		searchFlag{"", "initial search to fill in"},
+		cli.StringFlag{"search, s", "", "initial search to fill in"},
 	}
 	app.Action = func(c *cli.Context) {
 		// parse choices
@@ -41,9 +40,6 @@ func main() {
 
 		// create a search
 		initialSearch := c.String("search")
-		if initialSearch == "" {
-			initialSearch = c.String("s")
-		}
 
 		// set up termbox
 		err := termbox.Init()
